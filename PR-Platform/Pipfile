@@ -1,0 +1,29 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+gunicorn = "*"
+nanoid = "*"
+Flask = "*"
+marshmallow = "*"
+google-cloud-firestore = "*"
+google-cloud = "*"
+flask-cors = "*"
+firebase-admin = "*"
+python-dateutil = "*"
+google-cloud-pubsub = "*"
+
+[dev-packages]
+black = "*"
+isort = "*"
+pylint-fail-under = "*"
+pytest = "*"
+pytest-randomly = "*"
+pytest-timeout = "*"
+pre-commit = "*"
+passlib = "*"
+
+[requires]
+python_version = "3.12"
