@@ -6,7 +6,7 @@ from flask import Blueprint
 from flask.app import Flask
 from flask_cors import CORS
 
-from app.main import LoginView, RegisterView
+from app.main import ContactUsView, LoginView, RegisterView
 
 bp = Blueprint("blueprint", __name__, url_prefix="/pr-platform")
 
@@ -21,6 +21,12 @@ bp.add_url_rule(
 bp.add_url_rule(
     "/login",
     view_func=LoginView.as_view("login"),
+    methods=["POST"],
+)
+
+bp.add_url_rule(
+    "/contact-us",
+    view_func=ContactUsView.as_view("contact_us"),
     methods=["POST"],
 )
 

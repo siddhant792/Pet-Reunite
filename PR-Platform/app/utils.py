@@ -55,3 +55,8 @@ def login_user(validated_data):
         return custom_response(message="Login successful", data=user_data, status_code=HTTPStatus.OK)
     else:
         return custom_response(message="Incorrect email or password", status_code=HTTPStatus.BAD_REQUEST)
+
+
+def record_contact_us_query(validated_data):
+    ref = FS_CLIENT.collection('contactUs').document()
+    ref.set(validated_data)
