@@ -1,6 +1,8 @@
 """
 Utility Module
 """
+import secrets
+import string
 
 from http import HTTPStatus
 
@@ -55,3 +57,22 @@ def login_user(validated_data):
         return custom_response(message="Login successful", data=user_data, status_code=HTTPStatus.OK)
     else:
         return custom_response(message="Incorrect email or password", status_code=HTTPStatus.BAD_REQUEST)
+
+
+def record_contact_us_query(validated_data):
+    ref = FS_CLIENT.collection('contactUs').document()
+    ref.set(validated_data)
+
+
+def fetch_dog_breeds():
+    breeds = []
+    for e in FS_CLIENT.collection("dogBreeds").stream():
+        breeds.append(e.to_dict()["name"])
+    
+    return breeds
+
+
+def generate_unique_id(length):
+    characters = string.ascii_letters + string.digits
+    unique_id = ''.join(secrets.choice(characters) for _ in range(length))
+    return unique_id
