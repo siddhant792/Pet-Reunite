@@ -37,3 +37,16 @@ class ContactUsSchema(Schema):
     def transform(self, data, *args, **kwargs):
         data["timestamp"] = datetime.now()
         return data
+
+
+class RegisterPetSchema(Schema):
+    id = fields.Str(required=True, validate=validate.Length(max=50))
+    name = fields.Str(required=True, validate=validate.Length(max=50))
+    breed = fields.Str(required=True, validate=validate.Length(max=50))
+    color = fields.Str(required=True, validate=validate.Length(max=50))
+    age = fields.Int(required=True)
+    gender = fields.Str(required=True, validate=validate.Length(max=50))
+    description = fields.Str(required=True, validate=validate.Length(max=1000))
+
+    class Meta:
+        unknown = EXCLUDE
