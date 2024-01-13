@@ -47,6 +47,7 @@ class RegisterPetSchema(Schema):
     age = fields.Int(required=True)
     gender = fields.Str(required=True, validate=validate.Length(max=50))
     description = fields.Str(required=True, validate=validate.Length(max=1000))
+    image = fields.Str(required=True)
 
     class Meta:
         unknown = EXCLUDE

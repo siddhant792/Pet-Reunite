@@ -1,15 +1,19 @@
 """
 Utility Module
 """
+
+import base64
 import secrets
 import string
 
 from http import HTTPStatus
 
 from flask import jsonify
-from app.settings import FS_CLIENT
+from app.settings import FS_CLIENT, STORAGE_CLIENT
 from passlib.hash import pbkdf2_sha256
 
+
+bucket = STORAGE_CLIENT.bucket('default-bucket-pet-reunite')
 
 def custom_response(
     message: str = "",
@@ -76,3 +80,16 @@ def generate_unique_id(length):
     characters = string.ascii_letters + string.digits
     unique_id = ''.join(secrets.choice(characters) for _ in range(length))
     return unique_id
+
+
+def register_pet(validated_data):
+    doc_ref = FS_CLIENT.document(f"lostPets/{validated_data['id']}")
+    blob = bucket.blob(f"pet-images/{doc_ref.id}.jpg")
+    decoded_image_data = base64.b64decode(validated_data['image'])
+    blob.upload_from_string(decoded_image_data, content_type='image/jpeg')
+    blob.acl.all().grant_read()
+    blob.acl.save()
+
+    validated_data["image"] = blob.public_url
+    doc_ref.set(validated_data)
+    return {"id": validated_data["id"]}
