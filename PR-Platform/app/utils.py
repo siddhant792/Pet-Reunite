@@ -9,6 +9,7 @@ import string
 from http import HTTPStatus
 
 from flask import jsonify
+from app.enums import PetStatusEnum
 from app.settings import FS_CLIENT, STORAGE_CLIENT
 from passlib.hash import pbkdf2_sha256
 
@@ -83,7 +84,7 @@ def generate_unique_id(length):
 
 
 def register_pet(validated_data):
-    doc_ref = FS_CLIENT.document(f"lostPets/{validated_data['id']}")
+    doc_ref = FS_CLIENT.document(f"users/{validated_data['user_id']}/pets/{validated_data['id']}")
     blob = bucket.blob(f"pet-images/{doc_ref.id}.jpg")
     decoded_image_data = base64.b64decode(validated_data['image'])
     blob.upload_from_string(decoded_image_data, content_type='image/jpeg')
@@ -93,3 +94,15 @@ def register_pet(validated_data):
     validated_data["image"] = blob.public_url
     doc_ref.set(validated_data)
     return {"id": validated_data["id"]}
+
+
+def update_pet_last_seen(validated_data):
+    pet_ref = FS_CLIENT.document(f"users/{validated_data['user_id']}/pets/{validated_data['pet_id']}")
+    pet_ref.set({
+        "last_seen": {
+            "address": validated_data["address"],
+            "latitude": validated_data["latitude"],
+            "longitude": validated_data["longitude"]
+        },
+        "status": PetStatusEnum.LOST.value
+    }, merge=True)
