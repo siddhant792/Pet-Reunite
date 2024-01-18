@@ -5,6 +5,8 @@ Serializer Module
 from datetime import datetime
 from marshmallow import EXCLUDE, Schema, fields, post_load, validate
 
+from app.enums import PetStatusEnum
+
 class UserRegistrationSchema(Schema):
     first_name = fields.Str(required=True, validate=validate.Length(max=50))
     last_name = fields.Str(required=True, validate=validate.Length(max=50))
@@ -40,14 +42,30 @@ class ContactUsSchema(Schema):
 
 
 class RegisterPetSchema(Schema):
-    id = fields.Str(required=True, validate=validate.Length(max=50))
-    name = fields.Str(required=True, validate=validate.Length(max=50))
-    breed = fields.Str(required=True, validate=validate.Length(max=50))
-    color = fields.Str(required=True, validate=validate.Length(max=50))
+    id = fields.Str(required=True)
+    name = fields.Str(required=True)
+    breed = fields.Str(required=True)
+    color = fields.Str(required=True)
     age = fields.Int(required=True)
-    gender = fields.Str(required=True, validate=validate.Length(max=50))
+    gender = fields.Str(required=True)
     description = fields.Str(required=True, validate=validate.Length(max=1000))
     image = fields.Str(required=True)
+    user_id = fields.Str(required=True)
+    status = fields.Str(
+        validate=validate.OneOf([status.value for status in PetStatusEnum]),
+        default=PetStatusEnum.REGISTERED.value
+    )
+
+    class Meta:
+        unknown = EXCLUDE
+
+
+class LastSeenPetSchema(Schema):
+    user_id = fields.Str(required=True)
+    pet_id = fields.Str(required=True)
+    address = fields.Str(required=True, validate=validate.Length(max=300))
+    latitude = fields.Str(required=True)
+    longitude = fields.Str(required=True)
 
     class Meta:
         unknown = EXCLUDE

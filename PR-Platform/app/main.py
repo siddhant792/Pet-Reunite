@@ -7,8 +7,8 @@ from flask import request
 from flask.views import MethodView
 from marshmallow import ValidationError
 
-from app.serializers import ContactUsSchema, RegisterPetSchema, UserLoginSchema, UserRegistrationSchema
-from app.utils import custom_response, email_exists, fetch_dog_breeds, generate_unique_id, login_user, record_contact_us_query, register_pet, register_user
+from app.serializers import ContactUsSchema, LastSeenPetSchema, RegisterPetSchema, UserLoginSchema, UserRegistrationSchema
+from app.utils import custom_response, email_exists, fetch_dog_breeds, generate_unique_id, login_user, record_contact_us_query, register_pet, register_user, update_pet_last_seen
 
 
 class RegisterView(MethodView):
@@ -76,7 +76,7 @@ class GetRegisterPetDetailsView(MethodView):
 
 class RegisterPetView(MethodView):
     """
-    Class to register a lost pet
+    Class to register a pet
     """
 
     def post(self) -> tuple:
@@ -86,4 +86,19 @@ class RegisterPetView(MethodView):
         except ValidationError as e:
             return custom_response(message="Invalid Payload", error=e.messages, status_code=HTTPStatus.BAD_REQUEST)
 
-        return custom_response(data=register_pet(validated_data), message="Your lost pet has been registered successfully")
+        return custom_response(data=register_pet(validated_data), message="Your pet has been registered successfully")
+
+
+class LastSeenPetView(MethodView):
+    """
+    Class to update the last seen of a pet if it is lost
+    """
+
+    def post(self) -> tuple:
+        request_data = request.get_json()
+        try:
+            validated_data = LastSeenPetSchema().load(request_data)
+        except ValidationError as e:
+            return custom_response(message="Invalid Payload", error=e.messages, status_code=HTTPStatus.BAD_REQUEST)
+
+        return custom_response(data=update_pet_last_seen(validated_data), message="Last seen recorded successfully")
