@@ -3,9 +3,9 @@ Serializer Module
 """
 
 from datetime import datetime
-from marshmallow import EXCLUDE, Schema, fields, post_load, validate
+from marshmallow import EXCLUDE, Schema, fields, post_load, pre_load, validate
 
-from app.enums import PetStatusEnum
+from app.enums import PetGenderEnum, PetShelterEnum, PetStatusEnum
 
 class UserRegistrationSchema(Schema):
     first_name = fields.Str(required=True, validate=validate.Length(max=50))
@@ -47,7 +47,7 @@ class RegisterPetSchema(Schema):
     breed = fields.Str(required=True)
     color = fields.Str(required=True)
     age = fields.Int(required=True)
-    gender = fields.Str(required=True)
+    gender = fields.Str(required=True, validate=validate.OneOf([status.value for status in PetGenderEnum]))
     description = fields.Str(required=True, validate=validate.Length(max=1000))
     image = fields.Str(required=True)
     user_id = fields.Str(required=True)
@@ -60,12 +60,43 @@ class RegisterPetSchema(Schema):
         unknown = EXCLUDE
 
 
-class LastSeenPetSchema(Schema):
+class LastSeenLostPetSchema(Schema):
     user_id = fields.Str(required=True)
     pet_id = fields.Str(required=True)
-    address = fields.Str(required=True, validate=validate.Length(max=300))
+    address = fields.Str(required=True)
     latitude = fields.Str(required=True)
     longitude = fields.Str(required=True)
 
     class Meta:
         unknown = EXCLUDE
+
+
+class ReportFoundPetSchema(Schema):
+    user_id = fields.Str(required=True)
+    breed = fields.Str()
+    color = fields.Str()
+    gender = fields.Str(required=True, validate=validate.OneOf([status.value for status in PetGenderEnum]))
+    description = fields.Str(required=True, validate=validate.Length(max=1000))
+    address = fields.Str()
+    latitude = fields.Str()
+    longitude = fields.Str()
+    animal_shelter_id = fields.Str()
+    shelter_type = fields.Str(validate=validate.OneOf([status.value for status in PetShelterEnum]), required=True)
+    image = fields.Str(required=True)
+
+    class Meta:
+        unknown = EXCLUDE
+
+    @pre_load
+    def validate_shelter_type(self, data, **_):
+        shelter_type = data.get('shelter_type')
+        if shelter_type == PetShelterEnum.ANIMAL_SHELTER.value:
+            if 'animal_shelter_id' not in data:
+                raise ValueError('animal_shelter_id must be present for animal_shelter type.')
+
+        elif shelter_type == PetShelterEnum.HOME.value:
+            required_fields = ['address', 'latitude', 'longitude']
+            if not all(field in data for field in required_fields):
+                raise ValueError('address, latitude, and longitude must be present for home type.')
+
+        return data
