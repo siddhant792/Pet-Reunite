@@ -6,7 +6,7 @@ from flask import Blueprint
 from flask.app import Flask
 from flask_cors import CORS
 
-from app.main import ContactUsView, GetRegisterPetDetailsView, LastSeenPetView, LoginView, RegisterPetView, RegisterView
+from app.main import ContactUsView, GetRegisterPetDetailsView, LastSeenLostPetView, LoginView, RegisterPetView, RegisterView, ReportFoundPetView
 
 bp = Blueprint("blueprint", __name__, url_prefix="/pr-platform")
 
@@ -44,7 +44,13 @@ bp.add_url_rule(
 
 bp.add_url_rule(
     "/update-last-seen",
-    view_func=LastSeenPetView.as_view("update_last_seen"),
+    view_func=LastSeenLostPetView.as_view("update_last_seen"),
+    methods=["POST"],
+)
+
+bp.add_url_rule(
+    "/report-found-pet",
+    view_func=ReportFoundPetView.as_view("report_found_pet"),
     methods=["POST"],
 )
 

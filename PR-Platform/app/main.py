@@ -7,8 +7,8 @@ from flask import request
 from flask.views import MethodView
 from marshmallow import ValidationError
 
-from app.serializers import ContactUsSchema, LastSeenPetSchema, RegisterPetSchema, UserLoginSchema, UserRegistrationSchema
-from app.utils import custom_response, email_exists, fetch_dog_breeds, generate_unique_id, login_user, record_contact_us_query, register_pet, register_user, update_pet_last_seen
+from app.serializers import ContactUsSchema, LastSeenLostPetSchema, RegisterPetSchema, ReportFoundPetSchema, UserLoginSchema, UserRegistrationSchema
+from app.utils import custom_response, email_exists, fetch_dog_breeds, generate_unique_id, login_user, record_contact_us_query, record_found_pet, register_pet, register_user, update_pet_last_seen
 
 
 class RegisterView(MethodView):
@@ -89,7 +89,7 @@ class RegisterPetView(MethodView):
         return custom_response(data=register_pet(validated_data), message="Your pet has been registered successfully")
 
 
-class LastSeenPetView(MethodView):
+class LastSeenLostPetView(MethodView):
     """
     Class to update the last seen of a pet if it is lost
     """
@@ -97,8 +97,23 @@ class LastSeenPetView(MethodView):
     def post(self) -> tuple:
         request_data = request.get_json()
         try:
-            validated_data = LastSeenPetSchema().load(request_data)
+            validated_data = LastSeenLostPetSchema().load(request_data)
         except ValidationError as e:
             return custom_response(message="Invalid Payload", error=e.messages, status_code=HTTPStatus.BAD_REQUEST)
 
         return custom_response(data=update_pet_last_seen(validated_data), message="Last seen recorded successfully")
+
+
+class ReportFoundPetView(MethodView):
+    """
+    Class to record a found pet details
+    """
+
+    def post(self) -> tuple:
+        request_data = request.get_json()
+        try:
+            validated_data = ReportFoundPetSchema().load(request_data)
+        except (ValidationError, ValueError) as e:
+            return custom_response(message="Invalid Payload", error=str(e), status_code=HTTPStatus.BAD_REQUEST)
+
+        return custom_response(data=record_found_pet(validated_data), message="Found pet recorded successfully")

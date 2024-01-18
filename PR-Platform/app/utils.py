@@ -2,6 +2,8 @@
 Utility Module
 """
 
+import pytz
+import datetime
 import base64
 import secrets
 import string
@@ -104,5 +106,17 @@ def update_pet_last_seen(validated_data):
             "latitude": validated_data["latitude"],
             "longitude": validated_data["longitude"]
         },
-        "status": PetStatusEnum.LOST.value
+        "status": PetStatusEnum.LOST.value,
+        "lostReportingTimeStamp": datetime.datetime.now(tz=pytz.timezone("Australia/Sydney"))
     }, merge=True)
+
+
+def record_found_pet(validated_data):
+    pet_ref = FS_CLIENT.collection(f"users/{validated_data['user_id']}/foundPets").document()
+    blob = bucket.blob(f"pet-images/{pet_ref.id}.jpg")
+    decoded_image_data = base64.b64decode(validated_data['image'])
+    blob.upload_from_string(decoded_image_data, content_type='image/jpeg')
+    blob.acl.all().grant_read()
+    blob.acl.save()
+    validated_data["image"] = blob.public_url
+    pet_ref.set(validated_data)

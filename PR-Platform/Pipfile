@@ -24,6 +24,7 @@ pytest-randomly = "*"
 pytest-timeout = "*"
 pre-commit = "*"
 passlib = "*"
+pytz = "*"
 
 [requires]
 python_version = "3.12"
