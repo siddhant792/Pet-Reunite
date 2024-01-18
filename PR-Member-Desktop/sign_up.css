@@ -1,3 +1,13 @@
+.link {
+  text-decoration: none; /* Removes underline from links */
+  color: black; /* Sets the font color to black */
+}
+
+.link2 {
+  text-decoration: none; /* Removes underline from links */
+  color: purple; /* Sets the font color to black */
+}
+
 .div {
   display: flex;
   flex-direction: column;
@@ -1582,6 +1592,22 @@ overflow: hidden;
   width: 100%;
   overflow: hidden;
 }
+
+.input {
+  background-color: #fff;
+  display: flex;
+  margin-top: 13px;
+  height: 34px;
+  flex-direction: column;
+  padding: 0;  /* Adjust padding as needed */
+}
+
+.input input[type="text"] {
+  border: none;
+  width: 100%;  /* Makes the input take the full width of its parent */
+  box-sizing: border-box; /* Ensures padding and border are included in the total width and height */
+}
+
 
 
 
