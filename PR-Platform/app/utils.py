@@ -16,6 +16,7 @@ from app.settings import FS_CLIENT, STORAGE_CLIENT
 from passlib.hash import pbkdf2_sha256
 from math import radians, sin, cos, sqrt, atan2
 from google.cloud import firestore
+from decimal import Decimal
 
 bucket = STORAGE_CLIENT.bucket('default-bucket-pet-reunite')
 
@@ -150,10 +151,14 @@ def fetch_lost_pet_search_result(validated_data):
 
     filtered_lost_pets = []
     for doc in query.stream():
-        doc_coordinates = doc.get('last_seen', {}).get("coordinates")
+        doc_data = doc.to_dict()
+        doc_coordinates = doc_data.get('last_seen', {}).get("coordinates")
 
-        distance_in_km = distance_between_locations_in_km(latitude, longitude, doc_coordinates.latitude, doc_coordinates.longitude)
+        distance_in_km = distance_between_locations_in_km(latitude, longitude, Decimal(doc_coordinates.latitude), Decimal(doc_coordinates.longitude))
         if distance_in_km <= radius:
-            filtered_lost_pets.append(doc.to_dict())
+            doc_data["last_seen"]["latitude"] = str(doc_coordinates.latitude)
+            doc_data["last_seen"]["longitude"] = str(doc_coordinates.longitude)
+            doc_data["last_seen"].pop("coordinates", None)
+            filtered_lost_pets.append(doc_data)
 
     return filtered_lost_pets

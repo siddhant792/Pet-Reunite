@@ -130,3 +130,9 @@ class LostPetSearchRequestSchema(Schema):
 
     class Meta:
         unknown = EXCLUDE
+
+    @post_load
+    def convert_coordinates(self, data, **_):
+        data['search_latitude'] = Decimal(data['search_latitude'])
+        data['search_longitude'] = Decimal(data['search_longitude'])
+        return data
