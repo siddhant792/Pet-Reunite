@@ -17,8 +17,15 @@ from passlib.hash import pbkdf2_sha256
 from math import radians, sin, cos, sqrt, atan2
 from google.cloud import firestore
 from decimal import Decimal
+from PIL import Image
+import torch
+import requests
+from io import BytesIO
+from transformers import ViTFeatureExtractor, ViTForImageClassification
 
 bucket = STORAGE_CLIENT.bucket('default-bucket-pet-reunite')
+model = ViTForImageClassification.from_pretrained("skyau/dog-breed-classifier-vit")
+feature_extractor = ViTFeatureExtractor.from_pretrained("skyau/dog-breed-classifier-vit")
 
 def custom_response(
     message: str = "",
@@ -112,6 +119,19 @@ def update_pet_last_seen(validated_data):
     }, merge=True)
 
 
+def predict_dog_breed(image_path):
+    response = requests.get(image_path)
+    image = Image.open(BytesIO(response.content))
+    inputs = feature_extractor(images=image, return_tensors="pt")
+
+    # Make predictions
+    with torch.no_grad():
+        logits = model(**inputs).logits
+
+    predicted_label = logits.argmax(-1).item()
+    return str(model.config.id2label[predicted_label]).lower()
+
+
 def record_found_pet(validated_data):
     pet_ref = FS_CLIENT.collection(f"users/{validated_data['user_id']}/foundPets").document()
     blob = bucket.blob(f"pet-images/{pet_ref.id}.jpg")
@@ -124,6 +144,10 @@ def record_found_pet(validated_data):
         validated_data["coordinates"] = firestore.GeoPoint(validated_data["latitude"], validated_data["longitude"])
         validated_data.pop("latitude", None)
         validated_data.pop("longitude", None)
+
+    if "breed" not in validated_data:
+        predicted_breed = predict_dog_breed(blob.public_url)
+        validated_data["breed"] = predicted_breed
 
     pet_ref.set(validated_data)
 

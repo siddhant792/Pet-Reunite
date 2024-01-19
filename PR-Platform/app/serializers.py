@@ -60,6 +60,13 @@ class RegisterPetSchema(Schema):
     class Meta:
         unknown = EXCLUDE
 
+    @post_load
+    def convert_to_lowercase(self, data, **_):
+        data['breed'] = data["breed"].lower()
+        data['color'] = data["color"].lower()
+        data['gender'] = data["gender"].lower()
+        return data
+
 
 class LastSeenLostPetSchema(Schema):
     user_id = fields.Str(required=True)
@@ -81,7 +88,7 @@ class LastSeenLostPetSchema(Schema):
 class ReportFoundPetSchema(Schema):
     user_id = fields.Str(required=True)
     breed = fields.Str()
-    color = fields.Str()
+    color = fields.Str(required=True)
     gender = fields.Str(required=True, validate=validate.OneOf([status.value for status in PetGenderEnum]))
     description = fields.Str(required=True, validate=validate.Length(max=1000))
     address = fields.Str()
@@ -93,6 +100,15 @@ class ReportFoundPetSchema(Schema):
 
     class Meta:
         unknown = EXCLUDE
+
+    @post_load
+    def convert_to_lowercase(self, data, **_):
+        if "breed" in data:
+            data['breed'] = data["breed"].lower()
+        
+        data['color'] = data["color"].lower()
+        data['gender'] = data["gender"].lower()
+        return data
 
     @pre_load
     def validate_shelter_type(self, data, **_):
