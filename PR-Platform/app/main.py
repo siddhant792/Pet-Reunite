@@ -7,8 +7,8 @@ from flask import request
 from flask.views import MethodView
 from marshmallow import ValidationError
 
-from app.serializers import ContactUsSchema, LastSeenLostPetSchema, RegisterPetSchema, ReportFoundPetSchema, UserLoginSchema, UserRegistrationSchema
-from app.utils import custom_response, email_exists, fetch_dog_breeds, generate_unique_id, login_user, record_contact_us_query, record_found_pet, register_pet, register_user, update_pet_last_seen
+from app.serializers import ContactUsSchema, LastSeenLostPetSchema, LostPetSearchRequestSchema, RegisterPetSchema, ReportFoundPetSchema, UserLoginSchema, UserRegistrationSchema
+from app.utils import custom_response, email_exists, fetch_dog_breeds, fetch_lost_pet_search_result, generate_unique_id, login_user, record_contact_us_query, record_found_pet, register_pet, register_user, update_pet_last_seen
 
 
 class RegisterView(MethodView):
@@ -117,3 +117,18 @@ class ReportFoundPetView(MethodView):
             return custom_response(message="Invalid Payload", error=str(e), status_code=HTTPStatus.BAD_REQUEST)
 
         return custom_response(data=record_found_pet(validated_data), message="Found pet recorded successfully")
+
+
+class GetPaginatedLostPetsSearchResults(MethodView):
+    """
+    Class to fetch paginated list of Lost pets based on search
+    """
+
+    def get(self) -> tuple:
+        request_data = request.get_json()
+        try:
+            validated_data = LostPetSearchRequestSchema().load(request_data)
+        except ValidationError as e:
+            return custom_response(message="Invalid Payload", error=e.messages, status_code=HTTPStatus.BAD_REQUEST)
+
+        return custom_response(data=fetch_lost_pet_search_result(validated_data), message="OK")

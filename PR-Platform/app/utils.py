@@ -2,19 +2,21 @@
 Utility Module
 """
 
-import pytz
-import datetime
 import base64
+import datetime
 import secrets
 import string
 
 from http import HTTPStatus
 
 from flask import jsonify
-from app.enums import PetStatusEnum
+import pytz
+from app.enums import OrderingDirection, PetStatusEnum
 from app.settings import FS_CLIENT, STORAGE_CLIENT
 from passlib.hash import pbkdf2_sha256
-
+from math import radians, sin, cos, sqrt, atan2
+from google.cloud import firestore
+from decimal import Decimal
 
 bucket = STORAGE_CLIENT.bucket('default-bucket-pet-reunite')
 
@@ -103,8 +105,7 @@ def update_pet_last_seen(validated_data):
     pet_ref.set({
         "last_seen": {
             "address": validated_data["address"],
-            "latitude": validated_data["latitude"],
-            "longitude": validated_data["longitude"]
+            "coordinates": firestore.GeoPoint(validated_data["latitude"], validated_data["longitude"])
         },
         "status": PetStatusEnum.LOST.value,
         "lostReportingTimeStamp": datetime.datetime.now(tz=pytz.timezone("Australia/Sydney"))
@@ -119,4 +120,45 @@ def record_found_pet(validated_data):
     blob.acl.all().grant_read()
     blob.acl.save()
     validated_data["image"] = blob.public_url
+    if "longitude" and "latitude":
+        validated_data["coordinates"] = firestore.GeoPoint(validated_data["latitude"], validated_data["longitude"])
+        validated_data.pop("latitude", None)
+        validated_data.pop("longitude", None)
+
     pet_ref.set(validated_data)
+
+
+def distance_between_locations_in_km(lat1, lon1, lat2, lon2):
+    dlat = radians(lat2 - lat1)
+    dlon = radians(lon2 - lon1)
+    a = sin(dlat / 2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) ** 2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    radius_of_earth = 6371.0
+    distance = radius_of_earth * c
+    return distance
+
+
+def fetch_lost_pet_search_result(validated_data):
+    latitude = validated_data["search_latitude"]
+    longitude = validated_data["search_longitude"]
+    radius = validated_data["search_radius"]
+
+    query = FS_CLIENT.collection_group("pets").where(
+        'status', "==", PetStatusEnum.LOST.value
+    ).order_by(
+        "lostReportingTimeStamp", direction=OrderingDirection.DESCENDING.value
+    )
+
+    filtered_lost_pets = []
+    for doc in query.stream():
+        doc_data = doc.to_dict()
+        doc_coordinates = doc_data.get('last_seen', {}).get("coordinates")
+
+        distance_in_km = distance_between_locations_in_km(latitude, longitude, Decimal(doc_coordinates.latitude), Decimal(doc_coordinates.longitude))
+        if distance_in_km <= radius:
+            doc_data["last_seen"]["latitude"] = str(doc_coordinates.latitude)
+            doc_data["last_seen"]["longitude"] = str(doc_coordinates.longitude)
+            doc_data["last_seen"].pop("coordinates", None)
+            filtered_lost_pets.append(doc_data)
+
+    return filtered_lost_pets

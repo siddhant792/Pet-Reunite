@@ -6,6 +6,7 @@ from datetime import datetime
 from marshmallow import EXCLUDE, Schema, fields, post_load, pre_load, validate
 
 from app.enums import PetGenderEnum, PetShelterEnum, PetStatusEnum
+from decimal import Decimal
 
 class UserRegistrationSchema(Schema):
     first_name = fields.Str(required=True, validate=validate.Length(max=50))
@@ -70,6 +71,12 @@ class LastSeenLostPetSchema(Schema):
     class Meta:
         unknown = EXCLUDE
 
+    @post_load
+    def convert_coordinates(self, data, **_):
+        data['latitude'] = Decimal(data['latitude'])
+        data['longitude'] = Decimal(data['longitude'])
+        return data
+
 
 class ReportFoundPetSchema(Schema):
     user_id = fields.Str(required=True)
@@ -99,4 +106,33 @@ class ReportFoundPetSchema(Schema):
             if not all(field in data for field in required_fields):
                 raise ValueError('address, latitude, and longitude must be present for home type.')
 
+        return data
+    
+    @post_load
+    def convert_coordinates(self, data, **_):
+        if "latitude" in data:
+            data['latitude'] = Decimal(data['latitude'])
+        
+        if "longitude" in data:
+            data['longitude'] = Decimal(data['longitude'])
+
+        return data
+
+
+class LostPetSearchRequestSchema(Schema):
+    color = fields.Str(required=True)
+    gender = fields.Str(required=True)
+    breed = fields.Str(required=True)
+    search_address = fields.Str(required=True)
+    search_latitude = fields.Str(required=True)
+    search_longitude = fields.Str(required=True)
+    search_radius = fields.Int(required=True)
+
+    class Meta:
+        unknown = EXCLUDE
+
+    @post_load
+    def convert_coordinates(self, data, **_):
+        data['search_latitude'] = Decimal(data['search_latitude'])
+        data['search_longitude'] = Decimal(data['search_longitude'])
         return data
