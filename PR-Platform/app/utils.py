@@ -155,7 +155,7 @@ def fetch_lost_pet_search_result(validated_data):
         doc_coordinates = doc_data.get('last_seen', {}).get("coordinates")
 
         distance_in_km = distance_between_locations_in_km(latitude, longitude, Decimal(doc_coordinates.latitude), Decimal(doc_coordinates.longitude))
-        if distance_in_km <= radius:
+        if distance_in_km <= radius and validated_data['color'].lower() == doc_data['color'] and validated_data['breed'].lower() == doc_data["breed"] and validated_data['gender'].lower() == doc_data["gender"]:
             doc_data["last_seen"]["latitude"] = str(doc_coordinates.latitude)
             doc_data["last_seen"]["longitude"] = str(doc_coordinates.longitude)
             doc_data["last_seen"].pop("coordinates", None)
