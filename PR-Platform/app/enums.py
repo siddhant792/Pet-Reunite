@@ -19,3 +19,8 @@ class PetGenderEnum(Enum):
 class PetShelterEnum(Enum):
     HOME = "home"
     ANIMAL_SHELTER = "animal_shelter"
+
+
+class OrderingDirection(Enum):
+    ASCENDING = "ASCENDING"
+    DESCENDING = "DESCENDING"
