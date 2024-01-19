@@ -25,6 +25,9 @@ pytest-timeout = "*"
 pre-commit = "*"
 passlib = "*"
 pytz = "*"
+torch = "*"
+transformers = "*"
+Pillow = "*"
 
 [requires]
-python_version = "3.12"
+python_version = "3.9"
