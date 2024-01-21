@@ -186,3 +186,11 @@ def fetch_lost_pet_search_result(validated_data):
             filtered_lost_pets.append(doc_data)
 
     return filtered_lost_pets
+
+
+def fetch_animal_shelters():
+    animal_shelters = []
+    for e in FS_CLIENT.collection("animalShelters").stream():
+        animal_shelters.append(e.to_dict())
+    
+    return animal_shelters
