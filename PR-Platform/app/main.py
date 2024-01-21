@@ -8,7 +8,7 @@ from flask.views import MethodView
 from marshmallow import ValidationError
 
 from app.serializers import ContactUsSchema, LastSeenLostPetSchema, LostPetSearchRequestSchema, RegisterPetSchema, ReportFoundPetSchema, UserLoginSchema, UserRegistrationSchema
-from app.utils import custom_response, email_exists, fetch_dog_breeds, fetch_lost_pet_search_result, generate_unique_id, login_user, record_contact_us_query, record_found_pet, register_pet, register_user, update_pet_last_seen
+from app.utils import custom_response, email_exists, fetch_animal_shelters, fetch_dog_breeds, fetch_lost_pet_search_result, generate_unique_id, login_user, record_contact_us_query, record_found_pet, register_pet, register_user, update_pet_last_seen
 
 
 class RegisterView(MethodView):
@@ -132,3 +132,13 @@ class GetPaginatedLostPetsSearchResults(MethodView):
             return custom_response(message="Invalid Payload", error=e.messages, status_code=HTTPStatus.BAD_REQUEST)
 
         return custom_response(data=fetch_lost_pet_search_result(validated_data), message="OK")
+
+
+class GetAnimalShelterList(MethodView):
+    """
+    Class to fetch the list of available animal shelters
+    """
+
+    def get(self) -> tuple:
+        return custom_response(data=fetch_animal_shelters(), message="OK")
+

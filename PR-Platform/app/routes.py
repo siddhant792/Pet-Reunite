@@ -6,7 +6,7 @@ from flask import Blueprint
 from flask.app import Flask
 from flask_cors import CORS
 
-from app.main import ContactUsView, GetPaginatedLostPetsSearchResults, GetRegisterPetDetailsView, LastSeenLostPetView, LoginView, RegisterPetView, RegisterView, ReportFoundPetView
+from app.main import ContactUsView, GetAnimalShelterList, GetPaginatedLostPetsSearchResults, GetRegisterPetDetailsView, LastSeenLostPetView, LoginView, RegisterPetView, RegisterView, ReportFoundPetView
 
 bp = Blueprint("blueprint", __name__, url_prefix="/pr-platform")
 
@@ -57,6 +57,12 @@ bp.add_url_rule(
 bp.add_url_rule(
     "/search-lost-pets",
     view_func=GetPaginatedLostPetsSearchResults.as_view("search_lost_pets"),
+    methods=["GET"],
+)
+
+bp.add_url_rule(
+    "/get-animal-shelters",
+    view_func=GetAnimalShelterList.as_view("fetch_animal_shelters"),
     methods=["GET"],
 )
 
