@@ -119,7 +119,7 @@ class ReportFoundPetView(MethodView):
         return custom_response(data=record_found_pet(validated_data), message="Found pet recorded successfully")
 
 
-class GetPaginatedLostPetsSearchResults(MethodView):
+class GetLostPetsSearchResults(MethodView):
     """
     Class to fetch paginated list of Lost pets based on search
     """
