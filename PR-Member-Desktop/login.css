@@ -696,6 +696,24 @@
     width: 100%;
     overflow: hidden;
   }
+
+
+
+.input {
+  background-color: #fff;
+  display: flex;
+  margin-top: 13px;
+  height: 34px;
+  flex-direction: column;
+  padding: 0;  /* Adjust padding as needed */
+}
+
+.input input[type="text"] {
+  border: none;
+  width: 100%;  /* Makes the input take the full width of its parent */
+  box-sizing: border-box; /* Ensures padding and border are included in the total width and height */
+}
+
   
   
 
