@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const signUpForm = document.querySelector('.btn'); 
+    const petForm = document.getElementById('petForm');
 
-    signUpForm.addEventListener('click', function(event) {
+    petForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
         const petType = document.getElementById('pet_type').value;
         const description = document.getElementById('description').value;
         const petBreed = document.getElementById('pet_breed').value;
-        const userAddress = document.getElementById('used_address').value;
+        const userAddress = document.getElementById('user_address').value; // Corrected the typo here
         const petColor = document.getElementById('pet_color').value;
         const gender = document.getElementById('gender').value;
 
@@ -27,3 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify(data)
         })
+        .then(response => response.json())
+        .then(data => console.log('Success:', data))
+        .catch((error) => console.error('Error:', error));
+    });
+});
