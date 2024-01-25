@@ -1074,5 +1074,53 @@
     overflow: hidden;
   }
   
+  .input {
+    background-color: #fff;
+    display: flex;
+    margin-top: 13px;
+    height: 32px;
+    flex-direction: column;
+    padding: 0;  /* Adjust padding as needed */
+  }
   
-    
+  .input input[type="text"] {
+    border: none;
+    width: 100%;  /* Makes the input take the full width of its parent */
+    height:100%;
+    box-sizing: border-box; /* Ensures padding and border are included in the total width and height */
+  }
+/* ... existing CSS ... */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px; /* Adjust as needed */
+}
+
+.form-label {
+  margin-bottom: 5px; /* Adjust as needed */
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style for disabled inputs */
+.form-control[disabled] {
+  background: #e9ecef;
+  opacity: 1; /* For consistency across different browsers */
+}
+
+/* Styles for select elements */
+.form-control select {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ... existing CSS ... */
