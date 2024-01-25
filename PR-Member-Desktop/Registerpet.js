@@ -1,25 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const signUpForm = document.querySelector('.btn');
+    const signUpButton = document.querySelector('.div-44');
 
-    if (signUpForm) {
-        signUpForm.addEventListener('click', function(event) {
+    if (signUpButton) {
+        signUpButton.addEventListener('click', function(event) {
             event.preventDefault();
 
-            const Pet_ID = document.getElementById('Pet_ID').value;
-            const Pet_Name = document.getElementById('Pet_Name').value;
-            const Pet_Type = document.getElementById('Pet_Type').value;
-            let Pet_Breed = document.getElementById('Pet_Breed').value;
-            const Pet_Color = document.getElementById('Pet_Color').value;
-            const Pet_Age = document.getElementById('Pet_Age').value;
-            const Pet_Gender = document.getElementById('Pet_Gender').value;
-            const confirmPassword = document.getElementById('confirm_pass').value;
-            const password = document.getElementById('password').value; // Assuming there's a password input
-
-            if (password !== confirmPassword) {
-                alert('Passwords do not match');
-                return;
-            }
-
+            const Pet_ID = document.getElementById('pet_id').value;
+            const Pet_Name = document.getElementById('name').value;
+            const Pet_Type = document.getElementById('type').value;
+            let Pet_Breed = document.getElementById('breed').value;
+            const Pet_Color = document.getElementById('color').value;
+            const Pet_Age = document.getElementById('age').value;
+            const Pet_Gender = document.getElementById('gender').value;
+            const Pet_Description = document.getElementById('description').value;
+    
             // If breed is 'other', use the custom breed value
             if (Pet_Breed === 'other') {
                 Pet_Breed = document.getElementById('custom_breed').value;
@@ -32,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 Pet_Breed: Pet_Breed,
                 Pet_Color: Pet_Color,
                 Pet_Age: Pet_Age,
-                Pet_Gender: Pet_Gender
+                Pet_Gender: Pet_Gender,
+                Pet_Description: Pet_Description
             };
 
             fetch('http://127.0.0.1:5000/pr-platform/register-pet', {
@@ -58,12 +53,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function showCustomBreed(selectElement) {
-    var customBreedContainer = document.getElementById('customBreedContainer');
-    if (selectElement.value === 'other') {
-        customBreedContainer.style.display = 'block';
+function showCustomBreed(select) {
+    var customBreedInput = document.getElementById('custom_breed');
+    if (select.value === 'other') {
+        customBreedInput.style.display = 'block';
     } else {
-        customBreedContainer.style.display = 'none';
+        customBreedInput.style.display = 'none';
     }
 }
-

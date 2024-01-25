@@ -599,8 +599,8 @@
     background-color: #5700ff;
     align-self: start;
     justify-content: center;
-    padding: 17px 46px;
-    font: 700 20px/150% Urbanist, sans-serif;
+    padding: 17px 26px;
+    font: 700 16px/150% Urbanist, sans-serif;
 }
 
 @media (max-width: 991px) {
@@ -1122,5 +1122,3 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-
-/* ... existing CSS ... */
