@@ -13,41 +13,55 @@ document.addEventListener('DOMContentLoaded', function() {
             const Pet_Age = document.getElementById('age').value;
             const Pet_Gender = document.getElementById('gender').value;
             const Pet_Description = document.getElementById('description').value;
-    
-            // If breed is 'other', use the custom breed value
-            if (Pet_Breed === 'other') {
-                Pet_Breed = document.getElementById('custom_breed').value;
+            const uploadImage = document.getElementById('upload_image').files[0];
+
+            const formData = new FormData();
+            formData.append('Pet_ID', Pet_ID);
+            formData.append('Pet_Name', Pet_Name);
+            formData.append('Pet_Type', Pet_Type);
+            formData.append('Pet_Color', Pet_Color);
+            formData.append('Pet_Age', Pet_Age);
+            formData.append('Pet_Gender', Pet_Gender);
+            formData.append('Pet_Description', Pet_Description);
+
+            // Check if an image was uploaded and append it to the FormData
+            if (uploadImage && Pet_Breed === 'other') {
+                formData.append('Pet_Image', uploadImage);
             }
 
-            const data = {
-                Pet_ID: Pet_ID,
-                Pet_Name: Pet_Name,
-                Pet_Type: Pet_Type,
-                Pet_Breed: Pet_Breed,
-                Pet_Color: Pet_Color,
-                Pet_Age: Pet_Age,
-                Pet_Gender: Pet_Gender,
-                Pet_Description: Pet_Description
-            };
+            // If breed is not 'other', send Pet_Breed as part of the form data
+            if (Pet_Breed !== 'other') {
+                formData.append('Pet_Breed', Pet_Breed);
+            }
 
             fetch('http://127.0.0.1:5000/pr-platform/register-pet', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+                body: formData
             })
             .then(response => response.json())
             .then(data => {
+                const messageElement = document.getElementById('registrationMessage');
                 if (data.message === "registered successfully") {
                     console.log('Registration Successful:', data);
-                    // Redirect or update UI as needed
+                    messageElement.innerHTML = "Pet registered successfully.";
+                    messageElement.style.display = 'block';
+                    messageElement.style.color = 'green';
+                    if (data.breedIdentified) {
+                        document.getElementById('breed').value = data.breedIdentified;
+                    }
                 } else {
                     console.error('Registration Failed:', data);
+                    messageElement.innerHTML = "Registration failed. Please try again.";
+                    messageElement.style.display = 'block';
+                    messageElement.style.color = 'red';
                 }
             })
             .catch((error) => {
                 console.error('Error:', error);
+                const messageElement = document.getElementById('registrationMessage');
+                messageElement.innerHTML = "An error occurred. Please try again.";
+                messageElement.style.display = 'block';
+                messageElement.style.color = 'red';
             });
         });
     }
@@ -61,3 +75,4 @@ function showCustomBreed(select) {
         customBreedInput.style.display = 'none';
     }
 }
+
