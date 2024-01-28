@@ -244,6 +244,22 @@
     margin: auto;
     width: 80%;
   }
+
+  .pet-details-container_2 {
+    background-color: #353535;
+    display: flex;
+    flex-direction: column;
+    padding: 42px 58px;
+    margin: auto;
+    width: 80%;
+  }
+
+  @media (max-width: 991px) {
+    .pet-details-container_2 {
+      padding: 0 20px;
+      width: 100%;
+    }
+  }
   
   @media (max-width: 991px) {
     .pet-details-container {
@@ -254,6 +270,12 @@
   
   .header {
     color: #000;
+    font: 600 40px/150% Urbanist, sans-serif;
+    margin-bottom: 20px;
+  }
+
+  .header_2 {
+    color: #ffffff;
     font: 600 40px/150% Urbanist, sans-serif;
     margin-bottom: 20px;
   }
@@ -810,8 +832,9 @@
   margin-bottom: 15px; /* Adjust as needed */
 }
 
-.form-label {
+.form-label_2 {
   margin-bottom: 5px; /* Adjust as needed */
+  color: white;
 }
 
 .form-control {
