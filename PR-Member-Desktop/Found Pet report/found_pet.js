@@ -4,19 +4,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('myModal');
     const span = document.getElementsByClassName('close')[0];
 
-    shelterLink.onclick = function(event) {
-        event.preventDefault();
-        modal.style.display = "block";
+    function fetchNearbyShelters() {
+        const userLatitude = 'user_latitude';
+        const userLongitude = 'user_longitude';
 
-        const shelters = [{
-            name: 'RSPCA Burwood East', 
-            address: '3 Burwood Hwy, Burwood East VIC 3151', 
-            phone: '(03) 9224 2222', 
-            openingHours: 'Opens 9AM', 
-            imageUrl: 'path_to_shelter_image.jpg'
-        }];
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=5000&type=animal_shelter&key=YOUR_GOOGLE_MAPS_API_KEY`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                populateModalWithShelters(data.results);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function populateModalWithShelters(shelters) {
         const modalBody = document.querySelector('.modal-body');
-        modalBody.innerHTML = ''; 
+        modalBody.innerHTML = '';
 
         shelters.forEach(shelter => {
             const shelterDiv = document.createElement('div');
@@ -67,20 +71,31 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                  
                   </div>
-                  <button class="div-45">Select</button>
+                  <button class="select-button" div class="div-45" data-address="${shelter.address}">Select</button>
                 </div>
               </div>
             </div>
           </div>
             `;
             modalBody.appendChild(shelterDiv);
+
+            shelterDiv.querySelector('.select-button').addEventListener('click', function() {
+                document.getElementById('user_address').value = this.getAttribute('data-address');
+                modal.style.display = 'none'; 
+            });
+
         });
+    };
+
+    shelterLink.onclick = function(event) {
+        event.preventDefault();
+        modal.style.display = "block";
+        fetchNearbyShelters(); 
     };
 
     span.onclick = function() {
         modal.style.display = "none";
     };
-
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";

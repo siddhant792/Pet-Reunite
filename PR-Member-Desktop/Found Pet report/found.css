@@ -972,6 +972,7 @@
   max-width: 726px;
   flex-direction: column;
 }
+
 .div-31 {
   color: var(--Absolute-White, #121019);
   width: 100%;
@@ -988,21 +989,26 @@
   margin-top: 10px;
   width: 100%;
   font: 500 16px/150% Urbanist, sans-serif;
+
 }
 @media (max-width: 991px) {
   .div-32 {
     max-width: 100%;
   }
 }
+
 .div-33 {
   border-radius: 20px;
   background-color: #f7f2ff;
   display: flex;
   margin-top: 10px;
-  justify-content: space-between;
+  justify-content: center; 
+  align-items: center; 
   gap: 20px;
   padding: 14px 42px;
+  width: 100%;
 }
+
 @media (max-width: 991px) {
   .div-33 {
     max-width: 100%;
@@ -1131,14 +1137,14 @@
   border-radius: 12px;
   background-color: #22004d;
   align-self: end;
-  margin-top: 95px;
-  aspect-ratio: 2.78;
+  margin-top: 14px;
+  aspect-ratio: 2.18;
   justify-content: center;
   padding: 8px 17px;
-  font: 700 11px/150% Urbanist, sans-serif;
+  font: 700 11px/100% Urbanist, sans-serif;
 }
 @media (max-width: 991px) {
   .div-45 {
-    margin-top: 40px;
+    margin-top: 10px;
   }
 }
