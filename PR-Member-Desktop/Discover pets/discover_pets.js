@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function() {
     petForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Extract data from the form
         const petType = document.getElementById('petType').value;
         const petColor = document.getElementById('petColor').value;
         const petGender = document.getElementById('petGender').value;
@@ -36,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const lastSeen = document.getElementById('lastSeen').value;
         const radius = document.getElementById('radius').value;
 
-        // Prepare the request URL with query parameters
         const url = `http://127.0.0.1:5000/pr-platform/search-lost-pets?color=${encodeURIComponent(petColor)}&breed=${encodeURIComponent(petBreed)}&gender=${encodeURIComponent(petGender)}&search_address=${encodeURIComponent(lastSeen)}&search_radius=${encodeURIComponent(radius)}`;
 
         // Fetch data from the server

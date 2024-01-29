@@ -894,6 +894,76 @@
   cursor: pointer;
 }
 
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  cursor: pointer;
+}
+
+/* Shelter list styles */
+.shelter-list {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.shelter-list .shelter {
+  background-color: #f7f2ff;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shelter img {
+  border-radius: 10px;
+  width: 150px;
+  margin-right: 20px;
+}
+
+.shelter .shelter-info {
+  flex-grow: 1;
+}
+
+.shelter .select-button {
+  background-color: #22004d;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
   
   
   
