@@ -1,27 +1,35 @@
-// Get the modal
-var modal = document.getElementById("lostPetModal");
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector('.column-2'); 
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-// Get the button that opens the modal
-var btn = document.getElementsByClassName("lost-button");
+        const name = document.querySelector('#full_name').value;
+        const email = document.querySelector('#Email').value;
+        const message = document.querySelector('#message').value;
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+        // request payload
+        const data = {
+            name: name,
+            email: email,
+            message: message
+        };
 
-// When the user clicks the button, open the modal 
-for(var i = 0; i < btn.length; i++){
-    btn[i].onclick = function() {
-        modal.style.display = "block";
-    }
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
+        // POST request
+        fetch('http://127.0.0.1:5000/pr-platform/contact-us', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            alert('We will get back to you'); 
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.'); 
+        });
+    });
+});
