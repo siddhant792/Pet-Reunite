@@ -53,70 +53,20 @@
     <div class="dis">Discover Pets</div>
 
     </div>
-    <style>
-  .dis {
-    color: #000;
-    align-self: center;
-    margin-top: 109px;
-    font: 700 40px/120% Urbanist, sans-serif;
-  }
-  @media (max-width: 991px) {
-    .dis {
-      max-width: 100%;
-      font-size: 40px;
-      margin-top: 40px;
-    }
-  }
-    </style>
 
     <div class="pets-container">
-    <button class="btn-17">Lost Pets</button>
-    <button class="btn-18">Found Pets</button>
+      <button class="btn-17" id="lostPetsButton">Lost Pets</button>
+      <button class="btn-18" id="foundPetsButton">Found Pets</button>
+  
+      <div id="lostPetsContent" class="pet-content">
+         
+      </div>
+  
+      <div id="foundPetsContent" class="pet-content" style="display: none;">
+          
+      </div>
+  </div>
 </div>
-
-<style>
-    .pets-container {
-        display: flex;
-        align-items: stretch; /* Ensures children have equal height */
-        gap: 0px; /* No space between the two elements */
-        max-width: 30%;
-        margin-left: 20px;
-        margin-bottom: 0; /* Removes space between this container and the one below */
-    }
-
-    .btn-17, .btn-18 {
-        flex: 1; /* Each takes equal amount of space within the container */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        border-radius: 10px;
-        padding: 20px;
-        font: 700 15px/120% Urbanist, sans-serif;
-        border: 0.5px solid #000;
-        cursor: pointer;
-    }
-
-    .btn-17 {
-        background-color: #dec4ff;
-    }
-
-    .btn-18 {
-        background-color: #f0eeee;
-    }
-
-    @media (max-width: 991px) {
-        .btn-17, .btn-18 {
-            padding: 10px; /* Adjust padding for smaller screens */
-            flex-basis: 100%; /* Stack them on top of each other on smaller screens */
-        }
-        .pets-container {
-            max-width: 100%;
-            margin-left: 10px; /* Adjust left margin for smaller screens */
-        }
-    }
-</style>
-
 
 <div class="purple-block">
   <form class="pet-form">
@@ -143,84 +93,48 @@
               <label for="lastSeen">Last Seen (Address):</label>
               <input type="text" class="form-control" id="lastSeen" placeholder="Enter last seen location">
           </div>
+
+          <div class="form-group">
+            <label for="radius">Search radius:</label>
+            <input type="text" class="form-control" id="radius" placeholder="Enter value">
+        </div>
       </div>
       <button type="submit" class="btn btn-default">Search</button>
   </form>
-</div>
 
-<style>
-  .purple-block {
-      background-color: rgb(241, 231, 252);
-      padding: 20px;
-      margin-top: 0; /* Aligns directly under the previous container */
-      margin-left: 20px;
-      max-width: 100%;
-  }
+  <div class="div-20" id="searchResultsContainer1">
+    <div class="div-21">
+      <div class="column-20"></div>
+      <div class="column-21">
+        <div class="div-22">
+          <div class="div-23">
+            <div class="column-22"></div>
+            <div class="column-23">
+              <div class="div-24"><div class="div-25"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  .pet-form .form-row {
-      display: flex;
-      justify-content: normal;
-      margin-bottom: 15px;
-  }
+  <div class="div-20" id="searchResultsContainer2">
+    <div class="div-21">
+      <div class="column-20"></div>
+      <div class="column-21">
+        <div class="div-22">
+          <div class="div-23">
+            <div class="column-22"></div>
+            <div class="column-23">
+              <div class="div-24"><div class="div-25"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  .pet-form .form-group {
-      flex: 1;
-      margin-right: 20px;
-      max-width: 200px; /* Sets a maximum width for each form group */
-  }
-
-  .pet-form .form-group label {
-      font-size: 15px;
-      margin-bottom: 5px;
-      display: block;
-  }
-
-  .pet-form .form-group:last-child {
-      margin-right: 0;
-  }
-
-  .pet-form input {
-      width: 100%;
-      padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
-  }
-
-  .pet-form .btn {
-      background-color: #6a5acd;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-  }
-
-  .pet-form .btn:hover {
-      background-color: #5d4ab8;
-  }
-
-  @media (max-width: 991px) {
-      .purple-block {
-          padding: 10px;
-          margin-left: 10px;
-      }
-
-      .pet-form .form-row {
-          flex-direction: column;
-      }
-
-      .pet-form .form-group {
-          margin-right: 0;
-          margin-bottom: 10px;
-          max-width: 100%; /* Allows full width on smaller screens */
-      }
-
-      .pet-form .form-group:last-child {
-          margin-bottom: 0;
-      }
-  }
-</style>
+  <div class="div-see">See More</div>
 
 
 </div>
@@ -328,6 +242,8 @@
 </div>
 </body>
 </head>
+<script src="discover_pets.js"></script>
+
 </html>
 
 
