@@ -33,53 +33,72 @@ document.addEventListener("DOMContentLoaded", function() {
         const petGender = document.getElementById('petGender').value;
         const petBreed = document.getElementById('petBreed').value;
         const lastSeen = document.getElementById('lastSeen').value;
-        const radius = document.getElementById('radius').value;
+        let radius = document.getElementById('radius').value;
 
-        const url = `http://127.0.0.1:5000/pr-platform/search-lost-pets?color=${encodeURIComponent(petColor)}&breed=${encodeURIComponent(petBreed)}&gender=${encodeURIComponent(petGender)}&search_address=${encodeURIComponent(lastSeen)}&search_radius=${encodeURIComponent(radius)}`;
+        if (!Number.isInteger(Number(radius))) {
+            alert("Please enter a valid integer for radius.");
+            return;
+        }
 
-        // Fetch data from the server
-        fetch(url)
-            .then(response => response.json())
-            // ... existing JavaScript code ...
+        const simulatedApiResponse = [
+            {
+                name: "Sam",
+                age: "14 years old",
+                breed: "Toy poodle",
+                color: "White",
+                gender: "Male",
+                image: "path_to_pet_image.jpg",
+                created: "40 minutes ago",
+                status: "Found"
+            }
+        ];
 
-            .then(data => {
-                // reference to the results containers
-                const resultsContainer1 = document.getElementById('searchResultsContainer1');
-                const resultsContainer2 = document.getElementById('searchResultsContainer2');
+        const resultsContainer1 = document.getElementById('searchResultsContainer1');
+        const resultsContainer2 = document.getElementById('searchResultsContainer2');
 
-                // populate search results
-                function populateResults(container, data) {
-                    container.innerHTML = ''; 
+        function populateResults(container, data) {
+            container.innerHTML = '';
 
-                    if (data && data.length > 0) {
-                        data.forEach(pet => {
-                            const petDiv = document.createElement('div');
-                            petDiv.className = 'pet-item';
+            if (data && data.length > 0) {
+                data.forEach(pet => {
+                    const petDiv = document.createElement('div');
+                    petDiv.className = 'div-30';
 
-                            petDiv.innerHTML = `
-                                <img src="${pet.image}" alt="Pet Image" class="pet-image">
-                                <p><strong>Name:</strong> ${pet.name}</p>
-                                <p><strong>Breed:</strong> ${pet.breed}</p>
-                                <p><strong>Color:</strong> ${pet.color}</p>
-                                <p><strong>Age:</strong> ${pet.age}</p>
-                                <p><strong>Last Seen:</strong> ${pet.last_seen.address}</p>
-                            `;
+                    petDiv.innerHTML = `
+                        <div class="div-31">
+                          <div class="column-a1">
+                            <div class="div-32">
+                              Name: <span style="font-weight: 400">${pet.name}</span><br />
+                              Age: <span style="font-weight: 400">${pet.age}</span><br />
+                              Breed: <span style="font-weight: 400">${pet.breed}</span><br />
+                              Color: <span style="font-weight: 400">${pet.color}</span><br />
+                              Gender: <span style="font-weight: 400">${pet.gender}</span>
+                            </div>
+                          </div>
+                          <div class="column-a2">
+                            <div class="div-33">
+                              <img src="${pet.image}" class="img-a11" alt="Pet Image">
+                              <div class="div-34">
+                                <div class="div-36">${pet.created}</div>
+                                <div class="div-37">
+                                  <div class="div-38">Explore<br />Location</div>
+                                  <div class="div-39">${pet.status}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    `;
 
-                            container.appendChild(petDiv);
-                        });
-                    } else {
-                        container.innerHTML = '<p>No pets found based on your search criteria.</p>';
-                    }
-                }
+                    container.appendChild(petDiv);
+                });
+            } else {
+                container.innerHTML = '<p>No pets found based on your search criteria.</p>';
+            }
+        }
 
-                // Populate both containers with search results
-                populateResults(resultsContainer1, data.data);
-                populateResults(resultsContainer2, data.data);
-            })
-            .catch(error => {
-                console.error('Error fetching search results:', error);
-            });
-
-             
+        // Replace the following line with an actual API call
+        populateResults(resultsContainer1, simulatedApiResponse);
+        populateResults(resultsContainer2, simulatedApiResponse);
     });
 });

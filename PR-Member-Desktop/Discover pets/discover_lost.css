@@ -228,11 +228,31 @@
   overflow: hidden;
 }
 
+/* If there are specific margins or paddings on child elements that are causing the gap, reduce or remove them */
+.div-21, .column-20, .column-21, .div-22, .div-23, .column-22, .column-23, .div-24, .div-25 {
+  margin: 0;
+  padding: 0;
+}
+
+/* You may need to adjust the margin and padding of the search result containers specifically */
+#searchResultsContainer1, #searchResultsContainer2 {
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure that there's no extra space due to block-level elements defaulting to 100% width */
+.div-20, .div-21, .column-20, .column-21, .div-22, .div-23, .column-22, .column-23, .div-24, .div-25,
+#searchResultsContainer1, #searchResultsContainer2 {
+  width: auto; /* or specify a width if needed */
+}
+
     .div-20 {
       border-radius: 10px;
       background-color: #fff;
       margin-top: 31px;
       padding-left: 6px;
+      margin: 0;
+      padding: 0;
     }
     @media (max-width: 991px) {
       .div-20 {
@@ -954,9 +974,191 @@
         }
     }
 
-
-  
-
-
-
-
+    .div-30 {
+      border-radius: 10px;
+      background-color: #fff;
+      margin-top: 300px;
+      padding-left: 65px;
+    }
+    @media (max-width: 991px) {
+      .div-30 {
+        max-width: 100%;
+        margin-top: 40px;
+        padding-left: 20px;
+      }
+    }
+    .div-31 {
+      gap: 20px;
+      display: flex;
+    }
+    @media (max-width: 991px) {
+      .div-31 {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0px;
+      }
+    }
+    .column-a1 {
+      display: flex;
+      flex-direction: column;
+      line-height: normal;
+      width: 41%;
+      margin-left: 0px;
+    }
+    @media (max-width: 991px) {
+      .column-a1 {
+        width: 100%;
+      }
+    }
+    .div-32 {
+      color: var(--Absolute-White, #121019);
+      margin-top: 22px;
+      font: 600 20px/30px Urbanist, sans-serif;
+    }
+    @media (max-width: 991px) {
+      .div-32 {
+        max-width: 100%;
+        margin-top: 28px;
+      }
+    }
+    .column-a2 {
+      display: flex;
+      flex-direction: column;
+      line-height: normal;
+      width: 59%;
+      margin-left: 20px;
+    }
+    @media (max-width: 991px) {
+      .column-a2 {
+        width: 100%;
+      }
+    }
+    .div-33 {
+      border-radius: 10px;
+      background-color: #fff;
+      z-index: 10;
+      flex-grow: 1;
+      width: 100%;
+      padding: 8px 20px 8px 80px;
+    }
+    @media (max-width: 991px) {
+      .div-33 {
+        max-width: 100%;
+        margin-top: 6px;
+        padding-left: 20px;
+      }
+    }
+    .div-34 {
+      gap: 20px;
+      display: flex;
+    }
+    @media (max-width: 991px) {
+      .div-34 {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0px;
+      }
+    }
+    .column-a3 {
+      display: flex;
+      flex-direction: column;
+      line-height: normal;
+      width: 69%;
+      margin-left: 0px;
+    }
+    @media (max-width: 991px) {
+      .column-a3 {
+        width: 100%;
+      }
+    }
+    .img-a11 {
+      aspect-ratio: 1.89;
+      object-fit: contain;
+      object-position: center;
+      width: 100%;
+      flex-grow: 1;
+    }
+    @media (max-width: 991px) {
+      .img-a11 {
+        margin-top: 22px;
+      }
+    }
+    .column-a4 {
+      display: flex;
+      flex-direction: column;
+      line-height: normal;
+      width: 31%;
+      margin-left: 20px;
+    }
+    @media (max-width: 991px) {
+      .column-a4 {
+        width: 100%;
+      }
+    }
+    .div-35 {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+      align-self: stretch;
+      margin: auto 0;
+    }
+    @media (max-width: 991px) {
+      .div-35 {
+        margin-top: 25px;
+      }
+    }
+    .div-36 {
+      color: #aba9a9;
+      white-space: nowrap;
+      font: 600 15px/150% Urbanist, sans-serif;
+    }
+    @media (max-width: 991px) {
+      .div-36 {
+        white-space: initial;
+      }
+    }
+    .div-37 {
+      display: flex;
+      margin-top: 69px;
+      padding-left: 57px;
+      flex-direction: column;
+    }
+    @media (max-width: 991px) {
+      .div-37 {
+        padding-left: 20px;
+        margin-top: 40px;
+      }
+    }
+    .div-38 {
+      color: #000;
+      text-align: center;
+      border-radius: 10px;
+      background-color: rgba(
+        203.46503734588623,
+        175.04481196403503,
+        239.63602602481842,
+        1
+      );
+      justify-content: center;
+      padding: 7px 21px;
+      font: 700 15px/23px Volkhov, sans-serif;
+    }
+    @media (max-width: 991px) {
+      .div-38 {
+        padding-left: 20px;
+      }
+    }
+    .div-39 {
+      color: #000;
+      border-radius: 10px;
+      background-color: rgba(242.2640562057495, 232.25701957941055, 255, 1);
+      margin-top: 16px;
+      justify-content: center;
+      padding: 18px 28px;
+      font: 700 15px/150% Volkhov, sans-serif;
+    }
+    @media (max-width: 991px) {
+      .div-39 {
+        padding: 0 20px;
+      }
+    }
