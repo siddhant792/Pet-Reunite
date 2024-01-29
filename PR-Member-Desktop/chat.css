@@ -684,6 +684,7 @@
     height: 40px;
     padding: 0 10px;
   }
+  
   .img-33 {
     aspect-ratio: 1;
     object-fit: contain;
@@ -736,7 +737,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     @include font;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
     background-size: cover;
     background-repeat: none;
 }
