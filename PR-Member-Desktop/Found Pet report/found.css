@@ -976,6 +976,7 @@
   color: var(--Absolute-White, #121019);
   width: 100%;
   font: 600 28px/150% Urbanist, sans-serif;
+  text-align: left;
 }
 @media (max-width: 991px) {
   .div-31 {
@@ -1011,14 +1012,14 @@
 }
 .div-34 {
   display: flex;
-  flex-basis: 0%;
   flex-direction: column;
+  width: 100%; 
 }
 .div-35 {
   color: var(--Absolute-White, #121019);
   font: 600 15px/150% Urbanist, sans-serif;
 }
-.img {
+.img-a1 {
   aspect-ratio: 1.85;
   object-fit: contain;
   object-position: center;
@@ -1051,7 +1052,7 @@
   gap: 4px;
   padding: 3px 14px;
 }
-.img-2 {
+.img-a2 {
   aspect-ratio: 1.19;
   object-fit: contain;
   object-position: center;
@@ -1068,6 +1069,7 @@
     white-space: initial;
   }
 }
+
 .div-41 {
   border-radius: 28px;
   border: 1px solid var(--Grey-15, #262626);
@@ -1077,12 +1079,14 @@
   gap: 4px;
   padding: 2px 14px;
 }
-.img-3 {
+
+.img-a3 {
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
   width: 24px;
 }
+
 .div-42 {
   color: var(--Absolute-White, #121019);
   text-decoration-line: underline;
@@ -1098,13 +1102,14 @@
 .div-43 {
   border-radius: 28px;
   border: 1px solid var(--Grey-15, #262626);
-  background-color: var(--Grey-10, rgba(26, 26, 26, 0));
+  background-color: var(--Grey-10);
   display: flex;
   justify-content: space-between;
   gap: 4px;
   padding: 4px 14px;
 }
-.img-4 {
+
+.img-a4 {
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
