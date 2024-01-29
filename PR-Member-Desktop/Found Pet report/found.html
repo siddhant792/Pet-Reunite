@@ -112,18 +112,21 @@
         <input type="text" class="form-control" id="found_address" placeholder="Found address">
         <div class="shelter-option">
             
-            <a href="#" id="shelterLink">Place the pet at a shelter near you</a>
+            <!-- Trigger/Open The Modal -->
+        <a href="#" id="shelterLink">Place the pet at a shelter near you</a>
 
-            <div id="myModal" class="modal">
-
-              <div class="modal-content">
-                <span class="close">&times;</span>
-                <div class="shelter-list">
-                  <!-- Shelter content will be populated here -->
-                </div>
-              </div>
-
+        <!-- The Modal -->
+        <div id="myModal" class="modal" style="display: none;">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">Animal Shelters</div>
+            <div class="modal-body">
+              <p>Pick a shelter near you</p>
+              <!-- Dynamically insert shelter information here -->
             </div>
+          </div>
+        </div>
 
         </div>
     </div>
