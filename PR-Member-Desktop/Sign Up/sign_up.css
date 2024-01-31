@@ -1611,6 +1611,19 @@ overflow: hidden;
 
 
 
+.div-22 .btn {
+  background-color: #6a5acd;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.div-22 .btn:hover {
+  background-color: #5d4ab8;
+}
+
 
 
 
