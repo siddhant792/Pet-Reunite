@@ -152,3 +152,20 @@ class LostPetSearchRequestSchema(Schema):
         data['search_latitude'] = Decimal(data['search_latitude'])
         data['search_longitude'] = Decimal(data['search_longitude'])
         return data
+
+
+class UpdateLostPetSchema(Schema):
+    address = fields.Str(required=True)
+    latitude = fields.Str(required=True)
+    longitude = fields.Str(required=True)
+    user_id = fields.Str(required=True)
+    pet_id = fields.Str(required=True)
+
+    class Meta:
+        unknown = EXCLUDE
+
+    @post_load
+    def transform(self, data, *args, **kwargs):
+        data['latitude'] = Decimal(data['latitude'])
+        data['longitude'] = Decimal(data['longitude'])
+        return data

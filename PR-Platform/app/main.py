@@ -7,8 +7,8 @@ from flask import request
 from flask.views import MethodView
 from marshmallow import ValidationError
 
-from app.serializers import ContactUsSchema, LastSeenLostPetSchema, LostPetSearchRequestSchema, RegisterPetSchema, ReportFoundPetSchema, UserLoginSchema, UserRegistrationSchema
-from app.utils import custom_response, email_exists, fetch_animal_shelters, fetch_dog_breeds, fetch_lost_pet_search_result, generate_unique_id, login_user, record_contact_us_query, record_found_pet, register_pet, register_user, update_pet_last_seen
+from app.serializers import ContactUsSchema, LastSeenLostPetSchema, LostPetSearchRequestSchema, RegisterPetSchema, ReportFoundPetSchema, UpdateLostPetSchema, UserLoginSchema, UserRegistrationSchema
+from app.utils import custom_response, email_exists, fetch_animal_shelters, fetch_dog_breeds, fetch_found_pet_search_result, fetch_lost_pet_search_result, fetch_user_pets, generate_unique_id, login_user, record_contact_us_query, record_found_pet, register_pet, register_user, update_pet_last_seen, update_registered_pet_lost_status
 
 
 class RegisterView(MethodView):
@@ -124,7 +124,7 @@ class GetLostPetsSearchResults(MethodView):
     Class to fetch paginated list of Lost pets based on search
     """
 
-    def get(self) -> tuple:
+    def post(self) -> tuple:
         request_data = request.get_json()
         try:
             validated_data = LostPetSearchRequestSchema().load(request_data)
@@ -132,6 +132,21 @@ class GetLostPetsSearchResults(MethodView):
             return custom_response(message="Invalid Payload", error=e.messages, status_code=HTTPStatus.BAD_REQUEST)
 
         return custom_response(data=fetch_lost_pet_search_result(validated_data), message="OK")
+
+
+class GetFoundPetsSearchResults(MethodView):
+    """
+    Class to fetch paginated list of Found pets based on search
+    """
+
+    def post(self) -> tuple:
+        request_data = request.get_json()
+        try:
+            validated_data = LostPetSearchRequestSchema().load(request_data)
+        except ValidationError as e:
+            return custom_response(message="Invalid Payload", error=e.messages, status_code=HTTPStatus.BAD_REQUEST)
+        
+        return custom_response(data=fetch_found_pet_search_result(validated_data), message="OK")
 
 
 class GetAnimalShelterList(MethodView):
@@ -142,3 +157,26 @@ class GetAnimalShelterList(MethodView):
     def get(self) -> tuple:
         return custom_response(data=fetch_animal_shelters(), message="OK")
 
+
+class GetRegisteredPets(MethodView):
+    """
+    Class to fetch the list of user's registered pets
+    """
+
+    def get(self, user_id) -> tuple:
+        return custom_response(data=fetch_user_pets(user_id), message="OK")
+
+
+class UpdateRegisteredPetLostStatusDetails(MethodView):
+    """
+    Class to update the registered pet status
+    """
+
+    def post(self) -> tuple:
+        request_data = request.get_json()
+        try:
+            validated_data = UpdateLostPetSchema().load(request_data)
+        except ValidationError as e:
+            return custom_response(message="Invalid Payload", error=e.messages, status_code=HTTPStatus.BAD_REQUEST)
+        
+        return custom_response(data=update_registered_pet_lost_status(validated_data), message="OK")

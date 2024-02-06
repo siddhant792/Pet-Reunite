@@ -2,14 +2,16 @@
 <html lang="en">
 
 <head>
-
-<body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="contact_us.css">
 
-  <link rel="stylesheet" href="chat.css">
 
+</head>
+
+<body>
 
   <div class="div">
     <div class="div-2">
@@ -55,30 +57,68 @@
       </div>
     </div>
 
-    <!-- Adding the chat screen here -->
 
-    <div class="chat-container">
-      <div class="user-list" id="user-list"></div>
 
-      <!-- Chat section -->
-      <div class="chat-section" id="chat-section">
-        <div class="chat-section-parent">
-          <div class="mini-navbar">
-            <img src="https://cdn-icons-png.flaticon.com/512/219/219988.png" alt="Profile" class="profile-picture" />
-            <h3 id="active-chat-user-name"></h3>
-          </div>
-          <div class="messages" id="messages">
-            
-          </div>
-          <div class="message-input" id="message-input" >
-            <input placeholder="Type a message..." / id="message-draft">
-            <button id="send-message" >Send</button>
-          </div>
+
+
+
+
+
+    <div class="div-18">Contact Us</div>
+    <div class="div-19">
+      <div class="div-20">
+        <div class="column">
+          <img loading="lazy"
+            srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/7f14615571f31afc01c08ef15b25c50b24b4aebde3d6c218337c21f3613f4114?apiKey=90d6c2e5d5cc489a8f23e35431f3f62f&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/7f14615571f31afc01c08ef15b25c50b24b4aebde3d6c218337c21f3613f4114?apiKey=90d6c2e5d5cc489a8f23e35431f3f62f&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/7f14615571f31afc01c08ef15b25c50b24b4aebde3d6c218337c21f3613f4114?apiKey=90d6c2e5d5cc489a8f23e35431f3f62f&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/7f14615571f31afc01c08ef15b25c50b24b4aebde3d6c218337c21f3613f4114?apiKey=90d6c2e5d5cc489a8f23e35431f3f62f&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/7f14615571f31afc01c08ef15b25c50b24b4aebde3d6c218337c21f3613f4114?apiKey=90d6c2e5d5cc489a8f23e35431f3f62f&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/7f14615571f31afc01c08ef15b25c50b24b4aebde3d6c218337c21f3613f4114?apiKey=90d6c2e5d5cc489a8f23e35431f3f62f&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/7f14615571f31afc01c08ef15b25c50b24b4aebde3d6c218337c21f3613f4114?apiKey=90d6c2e5d5cc489a8f23e35431f3f62f&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/7f14615571f31afc01c08ef15b25c50b24b4aebde3d6c218337c21f3613f4114?apiKey=90d6c2e5d5cc489a8f23e35431f3f62f&"
+            class="img-7" />
         </div>
+        <div class="column-2">
+          <span class="span-4">
+            <div class="div-21">
+              <div class="div-22">
+                <div class="column-3">
+                  <span class="span-5">
+                    <div class="div-23">Full Name</div>
+                    <div class="input"><input type="text" class="form-control" id="full_name"
+                        placeholder="Enter Full Name"></div>
+                    <div class="div-25">Email</div>
+                    <div class="input"><input type="text" class="form-control" id="Email" placeholder="Enter Email">
+                    </div>
+                    <div class="div-27">Message</div>
+                    <div class="input"><input type="text" class="form-control" id="message" placeholder="Message"></div>
+                  </span>
+                </div>
+                <div class="column-4">
+                  <div class="div-29">
+                    Contact
+                    <br />
+                    <span style="font-weight: 400; font-size: 20px">
+                      PetReunite@pets.com
+                    </span>
+                    <br />
+                    <br />
+                    <br />
+                    Address
+                    <br />
+                    <span style="font-weight: 400; font-size: 20px">
+                      221 Burwood Hwy,
+                    </span>
+                    <br />
+                    <span style="font-weight: 400; font-size: 20px">
+                      Burwood VIC 3125
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button id="send-query" type="submit" class="btn btn-default">Send</button>
+        </div>
+
       </div>
 
-      <img src="chat-placeholder.png" id="chat-placeholder"/>
     </div>
+
 
     <div class="div-93">
       <div class="div-94">
@@ -166,10 +206,8 @@
   </div>
 
   </div>
+
+  <script src="scripts 1.js"></script>
+
 </body>
 </head>
-
-
-<script type="module" src="chat.js"></script>
-
-</html>

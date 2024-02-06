@@ -1,91 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <body>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
-<link rel="stylesheet" href="found.css">
+<link rel="stylesheet" href="register_pet.css">
 
 <div class="div">
-    <div class="div-2">
-      <div class="div-3">
-        <div class="div-4">
-          <div class="div-5">Find Your Pet</div>
-          <div class="div-6">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/8faa6d712a96d24dbaaf4125febf021416da16a9a38cdcb40c467ca30268569c?apiKey=f2e9a40ed9d643d5986df7494fc905b2&"
-              class="img-2"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="div-7">
-        <div class="div-8">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5a39dad4851245eb6113875401c5f3d2652904181d59d679a2ed75b499e15b5b?apiKey=f2e9a40ed9d643d5986df7494fc905b2&"
-            class="img-3"
-          />
-          <div class="div-9">PetReunite</div>
-        </div>
-        <div class="div-10">
-          <a href="index.html" class="link">Home</a>
-          <a href="about_us.html" class="link">About Us</a>
-          <a href="discover_lost.html" class="link">Discover Pets</a>
-          <a href="contact_us.html" class="link">Contact Us</a>
-        </div>
-        <div class="div-15"><a href="login.html" class="link">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/57d8ea293f5e6bf4e689cd353e4e3199784f9f63660e7cc1a5a8a511a5be0f0b?apiKey=f2e9a40ed9d643d5986df7494fc905b2&"
-            class="img-4"
-          /></a>
+  <div class="div-2">
+    <div class="div-3">
+      <div class="div-4">
+        <div class="div-5">Find Your Pet</div>
+        <div class="div-6">
+          <img loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/8faa6d712a96d24dbaaf4125febf021416da16a9a38cdcb40c467ca30268569c?apiKey=f2e9a40ed9d643d5986df7494fc905b2&"
+            class="img-2" />
         </div>
       </div>
     </div>
-    
-    <div class="pet-details-container">
-      <div class="header">Edit Pet Details</div>
-    
+    <div class="div-7">
+      <div class="div-8">
+        <img loading="lazy"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/5a39dad4851245eb6113875401c5f3d2652904181d59d679a2ed75b499e15b5b?apiKey=f2e9a40ed9d643d5986df7494fc905b2&"
+          class="img-3" />
+        <div class="div-9">PetReunite</div>
+      </div>
+      <div class="div-10">
+        <a href="http://127.0.0.1:5500/Home/" class="link">Home</a>
+        <a href="http://127.0.0.1:5500/About-US/about_us.html" class="link">About Us</a>
+        <a href="http://127.0.0.1:5500/Discover-Pets/discover_lost.html" class="link">Discover Pets</a>
+        <a href="http://127.0.0.1:5500/Contact-Us/contact_us.html" class="link">Contact Us</a>
+      </div>
+
+      <div class="div-15">
+        <a href="http://127.0.0.1:5500/User-Profile/User_Profile.html" class="link">
+          <img loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/57d8ea293f5e6bf4e689cd353e4e3199784f9f63660e7cc1a5a8a511a5be0f0b?apiKey=f2e9a40ed9d643d5986df7494fc905b2&"
+            class="img-4" />
+        </a>
+        <a href="http://127.0.0.1:5500/Chat/chat.html" class="link">
+        <img loading="lazy"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/b2f11d74b151357099e149062bf31c6f60d242095ce32b32e4fe49d4ff33b198?apiKey=90d6c2e5d5cc489a8f23e35431f3f62f&"
+          class="img-101" />
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+    <div class="div-17">
+      <div class="div-18">Details</div>
+      <div class="form-group">
+      
+        <label for="name" class="form-label">Pet ID</label>
+        <input type="text" class="form-control" id="pet_id" disabled>
+      </div>
+      <div class="form-group">
+        <label for="name" class="form-label">Pet Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter Pet Name">
+      </div>
       <div class="form-group">
         <label for="type" class="form-label">Pet Type</label>
         <input type="text" class="form-control" id="type" placeholder="Enter Pet Type" value="Dog" disabled>
       </div>
-
-      <div class="form-group">
-        <label for="gender" class="form-label">Gender</label>
-        <select id="gender" class="form-control">
-          <option value="">Select Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-      </div>
-    
-      <div class="form-group">
-        <label for="description" class="form-label">Description</label>
-        <input type="text" class="form-control" id="description" placeholder="Description">
-      </div>
-    
       <div class="form-group">
         <label for="breed" class="form-label">Pet Breed</label>
-        <select id="breed" class="form-control" onchange="showCustomBreed(this)">
-          <option value="">Select Breed</option>
-          <option value="labrador">Labrador</option>
-          <option value="bulldog">Bulldog</option>
-          <option value="beagle">Beagle</option>
-          <option value="other">Other</option>
+        <select id="breed" class="form-control" onchange="">
         </select>
-        <input type="text" class="form-control" id="custom_breed" placeholder="Enter Custom Breed" style="display:none;">
       </div>
-
+    
       <!-- Image Upload group -->
       <div class="form-group">
-        <label for="upload_image" class="form-label"><i>Unsure?</i> Upload an Image (optional)</label>
-        <input type="file" class="form-control" id="upload_image">
+        <label for="upload_image" class="form-label">Upload an Image</label>
+        <input type="file" class="form-control" id="upload_image" accept="image/*">
       </div>
-
+      
       <div class="form-group">
         <label for="color" class="form-label">Pet Color</label>
         <select id="color" class="form-control">
@@ -96,68 +87,32 @@
           <option value="grey">Grey</option>
         </select>
       </div>
-
       <div class="form-group">
-        <label for="age" class="form-label">Age</label>
-        <select id="age" class="form-control">
-          <option value="">Select Age</option>
-          <option value="puppy">Puppy</option>
-          <option value="adult">Adult</option>
-          <option value="senior">Senior</option>
+        <label for="age" class="form-label">Pet Age</label>
+        <input type="number" class="form-control" id="age" placeholder="Age">
+      </div>
+      <div class="form-group">
+        <label for="gender" class="form-label">Gender</label>
+        <select id="gender" class="form-control">
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
         </select>
       </div>
-
       <div class="form-group">
-        <label for="found_address" class="form-label">Found address</label>
-        <input type="text" class="form-control" id="found_address" placeholder="Found address">
-        <div class="shelter-option">
-            
-            <!-- Trigger/Open The Modal -->
-        <a href="#" id="shelterLink">Place the pet at a shelter near you</a>
-
-        <!-- The Modal -->
-        <div id="myModal" class="modal" style="display: none;">
-          <!-- Modal content -->
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="modal-header"></div>
-            <div class="modal-body">
-              <p>Pick a shelter near you</p>
-              <!-- Dynamically insert shelter information here -->
-            </div>
-          </div>
-        </div>
-
-        </div>
-    </div>
-    
-    </div>
-
-    <div class="pet-details-container_2">
-      <div class="header_2">Contact Details</div>
-
-      <div class="form-group">
-        <label for="name" class="form-label_2">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="name">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" class="form-control" id="description" placeholder="Description">
       </div>
-
+      
+      <!-- Done button -->
       <div class="form-group">
-        <label for="Mobile Number" class="form-label_2">Mobile Number</label>
-        <input type="text" class="form-control" id="Mobile Number" placeholder="Mobile Number">
-      </div>
-
-      <div class="form-group">
-        <label for="Email" class="form-label_2">Email</label>
-        <input type="text" class="form-control" id="Email" placeholder="Email">
-      </div>
-
-      <div class="form-group">
-        <button type="button" class="div-44">Done</button>
+        <button type="button" class="div-44" id="register-pet-button" >Done</button>
       </div>
 
       <div id="registrationMessage" class="alert" style="display: none;"></div>
-
     </div>
+    
+
 
   <div class="div-93">
     <div class="div-94">
@@ -262,7 +217,7 @@
 
 </div>
 
-<script src="found_pet.js"></script>
+<script src="Registerpet.js"></script>
 
 </body>
 </head>

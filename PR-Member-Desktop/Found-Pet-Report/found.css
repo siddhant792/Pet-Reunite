@@ -223,7 +223,7 @@
   align-self: stretch;
   display: flex;
   aspect-ratio: 1.6578947368421053;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   padding: 7px 20px;
   }
@@ -233,6 +233,10 @@
   object-position: center;
   width: 24px;
   overflow: hidden;
+  }
+
+  .div-15 img {
+    margin-left: 10px;
   }
 
 
@@ -316,7 +320,7 @@
     color: #fff;
     white-space: nowrap;
     border-radius: 40px;
-    background-color: #5700ff;
+    background-color: #a07beb;
     align-self: start;
     justify-content: center;
     padding: 17px 26px;
@@ -381,6 +385,10 @@
     .column-9 {
       width: 100%;
     }
+  }
+
+  #shelterLink {
+    cursor: pointer;
   }
   .div-95 {
     align-items: start;
@@ -1147,4 +1155,120 @@
   .div-45 {
     margin-top: 10px;
   }
+}
+
+#popup-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  text-align: center;
+}
+
+/* Heading styles */
+#popup-container h2 {
+  margin-bottom: 10px;
+  color: #007BFF;
+}
+
+/* Subtext styles */
+#popup-container p {
+  color: #555;
+}
+
+/* Card styles */
+.shelter-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Image styles */
+.shelter-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Name styles */
+.shelter-card .name {
+  flex-grow: 1;
+  padding: 10px;
+  text-align: left;
+}
+
+.shelter-card {
+  border: 2px solid #007BFF;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shelter-header {
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.shelter-add {
+  padding: 0 10px 0 10px;
+}
+
+.shelter-image {
+  flex: 1;
+  padding: 20px;
+}
+
+.shelter-details {
+  flex: 2;
+  padding: 5px 10px 5px 10px;
+  text-align: left;
+  padding-top: 0px;
+}
+
+.shelter-details p {
+  margin-bottom: 0px;
+}
+
+.select-button {
+  padding: 6px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.name-image-holder {
+  margin-left: 10px;
+}
+
+.close-animal-shelter-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
 }

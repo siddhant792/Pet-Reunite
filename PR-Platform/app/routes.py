@@ -4,13 +4,10 @@ Module to register app routes
 
 from flask import Blueprint
 from flask.app import Flask
-from flask_cors import CORS
 
-from app.main import ContactUsView, GetAnimalShelterList, GetLostPetsSearchResults, GetRegisterPetDetailsView, LastSeenLostPetView, LoginView, RegisterPetView, RegisterView, ReportFoundPetView
+from app.main import ContactUsView, GetAnimalShelterList, GetFoundPetsSearchResults, GetLostPetsSearchResults, GetRegisterPetDetailsView, GetRegisteredPets, LastSeenLostPetView, LoginView, RegisterPetView, RegisterView, ReportFoundPetView, UpdateRegisteredPetLostStatusDetails
 
 bp = Blueprint("blueprint", __name__, url_prefix="/pr-platform")
-
-CORS(bp, resources={rf"/pr-platform/*": {"origins": "http://127.0.0.1:3000"}})
 
 bp.add_url_rule(
     "/register",
@@ -57,13 +54,31 @@ bp.add_url_rule(
 bp.add_url_rule(
     "/search-lost-pets",
     view_func=GetLostPetsSearchResults.as_view("search_lost_pets"),
-    methods=["GET"],
+    methods=["POST"],
+)
+
+bp.add_url_rule(
+    "/search-found-pets",
+    view_func=GetFoundPetsSearchResults.as_view("search_found_pets"),
+    methods=["POST"],
 )
 
 bp.add_url_rule(
     "/get-animal-shelters",
     view_func=GetAnimalShelterList.as_view("fetch_animal_shelters"),
     methods=["GET"],
+)
+
+bp.add_url_rule(
+    "/get-user-pets/<user_id>",
+    view_func=GetRegisteredPets.as_view("fetch_registered_pets"),
+    methods=["GET"],
+)
+
+bp.add_url_rule(
+    "/update-registered-pet-lost-status",
+    view_func=UpdateRegisteredPetLostStatusDetails.as_view("update_pet_lost_status"),
+    methods=["POST"],
 )
 
 def register_routes(app: Flask) -> None:

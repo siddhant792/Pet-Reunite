@@ -1,3 +1,9 @@
+const user = localStorage.getItem("user")
+if(user) {
+    // navigate
+    window.location.href = "http://127.0.0.1:5500/Home"
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const signUpForm = document.querySelector('.btn'); 
 
@@ -24,24 +30,12 @@ document.addEventListener('DOMContentLoaded', function() {
             address: address
         };
 
-        fetch('http://127.0.0.1:3000/pr-platform/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message === "User registered successfully") {
-                console.log('Registration Successful:', data);
-                // Redirect to login page or update UI as needed
-            } else {
-                console.error('Registration Failed:', data);
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+        axios.post('http://127.0.0.1:5000/pr-platform/register', data)
+            .then(response => {
+                alert("Registration Successful, please login")
+            })
+            .catch(error => {
+                alert(error.response.data.message)
+            });
     });
 });

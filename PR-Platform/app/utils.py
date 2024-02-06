@@ -140,7 +140,7 @@ def record_found_pet(validated_data):
     blob.acl.all().grant_read()
     blob.acl.save()
     validated_data["image"] = blob.public_url
-    if "longitude" and "latitude":
+    if "longitude" in validated_data and "latitude" in validated_data:
         validated_data["coordinates"] = firestore.GeoPoint(validated_data["latitude"], validated_data["longitude"])
         validated_data.pop("latitude", None)
         validated_data.pop("longitude", None)
@@ -183,6 +183,40 @@ def fetch_lost_pet_search_result(validated_data):
             doc_data["last_seen"]["latitude"] = str(doc_coordinates.latitude)
             doc_data["last_seen"]["longitude"] = str(doc_coordinates.longitude)
             doc_data["last_seen"].pop("coordinates", None)
+            user = FS_CLIENT.document(f"users/{doc_data['user_id']}").get().to_dict()
+            doc_data["user_name"] = user["first_name"] + " " + user["last_name"]
+            filtered_lost_pets.append(doc_data)
+
+    return filtered_lost_pets
+
+
+def fetch_found_pet_search_result(validated_data):
+    latitude = validated_data["search_latitude"]
+    longitude = validated_data["search_longitude"]
+    radius = validated_data["search_radius"]
+
+    query = FS_CLIENT.collection_group("foundPets")
+
+    filtered_lost_pets = []
+    for doc in query.stream():
+        doc_data = doc.to_dict()
+        address = doc_data.get("address")
+        if doc_data["shelter_type"] != "home":
+            shelter_data = FS_CLIENT.document(f"animalShelters/{doc_data['animal_shelter_id']}").get().to_dict()
+            doc_coordinates = shelter_data.get("coordinates")
+            address = shelter_data.get("address")
+        else:
+            doc_coordinates = doc_data.get("coordinates")
+        doc_data["last_seen"] = {}
+        distance_in_km = distance_between_locations_in_km(latitude, longitude, Decimal(doc_coordinates.latitude), Decimal(doc_coordinates.longitude))
+        if distance_in_km <= radius and validated_data['color'].lower() == doc_data['color'] and validated_data['breed'].lower() == doc_data["breed"] and validated_data['gender'].lower() == doc_data["gender"]:
+            doc_data["last_seen"]["latitude"] = str(doc_coordinates.latitude)
+            doc_data["last_seen"]["longitude"] = str(doc_coordinates.longitude)
+            if doc_data["shelter_type"] == "home":
+                doc_data.pop("coordinates")
+            doc_data["last_seen"]["address"] = address
+            user = FS_CLIENT.document(f"users/{doc_data['user_id']}").get().to_dict()
+            doc_data["user_name"] = user["first_name"] + " " + user["last_name"]
             filtered_lost_pets.append(doc_data)
 
     return filtered_lost_pets
@@ -191,6 +225,33 @@ def fetch_lost_pet_search_result(validated_data):
 def fetch_animal_shelters():
     animal_shelters = []
     for e in FS_CLIENT.collection("animalShelters").stream():
-        animal_shelters.append(e.to_dict())
+        data = e.to_dict()
+        data["latitude"] = data["coordinates"].latitude
+        data["longitude"] = data["coordinates"].longitude
+        data.pop("coordinates")
+        animal_shelters.append(data)
     
     return animal_shelters
+
+
+def fetch_user_pets(user_id):
+    registered_pets = []
+    for e in FS_CLIENT.collection(f"users/{user_id}/pets").stream():
+        doc_data = e.to_dict()
+        doc_data["last_seen"] = {}
+        registered_pets.append(doc_data)
+    
+    return registered_pets
+
+
+def update_registered_pet_lost_status(validated_data):
+    pet_ref = FS_CLIENT.document(f"users/{validated_data['user_id']}/pets/{validated_data['pet_id']}")
+    updated_data = {
+        'last_seen': {
+            'address': validated_data['address'],
+            'coordinates': firestore.GeoPoint(validated_data["latitude"], validated_data["longitude"])
+        },
+        'lostReportingTimeStamp': datetime.datetime.now(),
+        'status': PetStatusEnum.LOST.value
+    }
+    pet_ref.set(updated_data, merge=True)
